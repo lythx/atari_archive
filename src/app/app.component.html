@@ -1,4 +1,13 @@
 <div [class.wrapper]="true">
   <p [ngStyle]="{ 'float': 'right' }">{{date | date: 'dd-MM-yyyy HH:mm:ss'}}</p>
-  <p>Wpisz zarobki z poprzedniego roku:<input type="password"></p>
+  <ng-container *ngIf="!displayGrid">
+    <p>Wpisz zarobki z poprzedniego roku:
+      <input [(ngModel)]="input" (input)="handleInput()" type="password">EUR
+    </p>
+    <p *ngIf="input!==''">I tak widzimy, że twoje zarobki to: {{input | currency:'EUR'}}</p>
+  </ng-container>
+  <ng-container *ngIf="displayGrid">
+    <p>Idealne zarobki by zrobić dalszą część zadania :)</p>
+    <div *ngFor=""></div>
+  </ng-container>
 </div>
