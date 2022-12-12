@@ -5,23 +5,29 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BibliotekaComponent } from './biblioteka/biblioteka.component';
-import { RouterModule } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
+import { ZarobkiComponent } from './zarobki/zarobki.component';
+
+const routes: Route[] = [
+  { path: 'biblioteka', component: BibliotekaComponent },
+  { path: 'zarobki', component: ZarobkiComponent },
+  { path: '', redirectTo: '/biblioteka', pathMatch: 'full' }
+]
 
 @NgModule({
   declarations: [
     AppComponent,
-    BibliotekaComponent
+    BibliotekaComponent,
+    ZarobkiComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      { path: 'biblioteka', component: BibliotekaComponent },
-      { path: '', component: AppComponent },
-    ])
+    RouterModule.forRoot(routes)
   ],
+  exports: [RouterModule],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,18 @@
 <div [class.wrapper]="true">
-  <ng-container>
-    <p>Idealne zarobki by zrobić dalszą część zadania :)</p>
-    <div [class.grid]="true">
-      <img *ngFor="let header of headers" src="http://atarionline.pl/biblioteka/czasopisma/img/{{header.image}}" />
-    </div>
-  </ng-container>
+  <h1>Czasopisma: {{czasopismaCount}} sztuk</h1>
+  <p>
+    Znajdujesz się w czytelni czasopism, które traktują o Atari lub zamieszczały artykuły o Atari. Jeżeli mamy więcej
+    numerów jakiegoś periodyku to ma on swój własny dział. Jeżeli o Atari był tylko pojedynczy artykuł, a pismo traktuje
+    zasadniczo o innych tematach - trafiają one do działu "Inne pisma". Jeżeli chcesz zobaczyć numery jakiegoś
+    czasopisma to postępuj następująco:
+
+    1. Najpierw kliknij na jeden z poniższych obrazków przedstawiających czasopisma.
+    2. Zostaniesz przeniesiony do miejsca, w którym jest już tylko dane czasopismo. Tam kliknij na pole, w którym
+    wpisany jest rok wydania danych egzemplarzy lub klikni pole z napisem "Wszystkie", żeby zobaczyć wszystkie
+    egzemplarze.
+  </p>
+  <div *ngIf="headersDisplayed" [class.grid]="true">
+    <img *ngFor="let header of headers" src="http://atarionline.pl/biblioteka/czasopisma/img/{{header.image}}"
+      (click)="handleHeaderClick(header.name)" />
+  </div>
 </div>

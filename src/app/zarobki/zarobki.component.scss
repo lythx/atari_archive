@@ -1,0 +1,26 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
+
+p {
+  font-size: 40px;
+  color: white;
+}
+
+input {
+  height: 30px;
+  margin: 10px;
+  width: 200px;
+}
+
+.grid {
+  grid-template-columns: 300px 300px;
+  display: grid;
+}
+
+.grid img {
+  height: 100px;
+  width: 300px;
+}

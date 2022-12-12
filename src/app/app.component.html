@@ -1,16 +1,1 @@
-<div [class.wrapper]="true">
-  <p [ngStyle]="{ 'float': 'right' }">{{date | date: 'dd-MM-yyyy HH:mm:ss'}}</p>
-  <ng-container *ngIf="!displayGrid">
-    <p>Wpisz zarobki z poprzedniego roku:
-      <input [(ngModel)]="inputValue" #input (input)="handleInput(input)" type="password">EUR
-    </p>
-    <p *ngIf="inputValue!==''">I tak widzimy, że twoje zarobki to: {{inputValue | currency:'EUR'}}</p>
-  </ng-container>
-  <ng-container *ngIf="displayGrid">
-    <p>Idealne zarobki by zrobić dalszą część zadania :)</p>
-    <div [class.grid]="true">
-      <img *ngFor="let image of images" src="http://atarionline.pl/biblioteka/czasopisma/img/{{image}}" />
-    </div>
-  </ng-container>
-</div>
 <router-outlet></router-outlet>
