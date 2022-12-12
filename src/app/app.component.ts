@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +10,12 @@ export class AppComponent implements OnInit {
 
   readonly title = 'atari_archive';
   date!: number
-  input!: string
+  inputValue = ''
   displayGrid = false
-  czasopismaXml!: Document
-  readonly validationRegExp = /^[0-9]*$/
+  readonly gridTriggerValue = '666.666'
+  private czasopismaXml!: Document
+  readonly images: string[] = []
+  private readonly validationRegExp = /[0-9]+(\.[0-9]*)?/
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,23 +23,32 @@ export class AppComponent implements OnInit {
     setInterval(() => {
       this.date = Date.now()
     }, 300)
-    const params = new HttpParams(
-
-    )
     this.httpClient.get("./assets/czasopisma.xml", {
-      params,
       responseType: 'text'
     }).subscribe((data) => {
       const parser = new DOMParser();
       this.czasopismaXml = parser.parseFromString(data, "text/xml");
+      this.getImagesFromXml()
     })
   }
 
-  handleInput() {
-    // TODO VALIDATE
-
-    if (this.input === '666.666') {
+  handleInput(input: HTMLInputElement) {
+    input.value = input.value.match(this.validationRegExp)?.[0] ?? ''
+    this.inputValue = input.value
+    if (this.inputValue === this.gridTriggerValue) {
       this.displayGrid = true
+    }
+  }
+
+  private getImagesFromXml() {
+    const response = this.czasopismaXml.evaluate(`/czasopisma/zmienne/*/src`,
+      this.czasopismaXml, null, XPathResult.ANY_TYPE);
+    let node = response.iterateNext()
+    while (node !== null) {
+      for (const imageNode of Array.from(node.childNodes)) {
+        this.images.push(imageNode.textContent as string)
+      }
+      node = response.iterateNext()
     }
   }
 
