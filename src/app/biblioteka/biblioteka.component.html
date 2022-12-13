@@ -1,5 +1,6 @@
 <div [class.wrapper]="true">
-  <h1>Czasopisma: {{czasopismaCount}} sztuk</h1>
+  <!-- <h1>Czasopisma: {{czasopismaCount}} sztuk</h1> -->
+  <h1>Czasopisma</h1>
   <p>
     Znajdujesz się w czytelni czasopism, które traktują o Atari lub zamieszczały artykuły o Atari. Jeżeli mamy więcej
     numerów jakiegoś periodyku to ma on swój własny dział. Jeżeli o Atari był tylko pojedynczy artykuł, a pismo traktuje
@@ -11,8 +12,11 @@
     wpisany jest rok wydania danych egzemplarzy lub klikni pole z napisem "Wszystkie", żeby zobaczyć wszystkie
     egzemplarze.
   </p>
-  <div *ngIf="headersDisplayed" [class.grid]="true">
+  <div *ngIf="displayedComponent==='headers'" [class.grid]="true">
     <img *ngFor="let header of headers" src="http://atarionline.pl/biblioteka/czasopisma/img/{{header.image}}"
       (click)="handleHeaderClick(header.name)" />
   </div>
+  <app-kategorie *ngIf="displayedComponent==='categories'" [kategorie]='categories'
+    (onCategoryClick)="handleCategoryClick($event)"></app-kategorie>
+  <app-czasopisma *ngIf="displayedComponent==='czasopisma'" [czasopisma]='czasopisma'></app-czasopisma>
 </div>

@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-interface Header {
-  name: string
-  image: string
-}
+import { CzasopismaService, Czasopismo, Header } from '../czasopisma.service'
 
 @Component({
   selector: 'app-biblioteka',
@@ -12,43 +8,32 @@ interface Header {
 })
 export class BibliotekaComponent implements OnInit {
 
-  private czasopismaXml!: Document
   czasopismaCount = 0
+  displayedComponent: 'headers' | 'categories' | 'czasopisma' = 'headers'
   readonly headers: Header[] = []
-  headersDisplayed = true
+  selectedHeader?: string
+  categories: string[] = []
+  selectedCategory?: string
+  czasopisma: Czasopismo[] = []
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly czasopismaService: CzasopismaService) { }
 
-  ngOnInit() {
-    this.httpClient.get("./assets/czasopisma.xml", {
-      responseType: 'text'
-    }).subscribe((data) => {
-      const parser = new DOMParser();
-      this.czasopismaXml = parser.parseFromString(data, "text/xml");
-      this.getHeadersFromXml()
-    })
+  async ngOnInit() {
+    this.headers.push(...await this.czasopismaService.fetchHeaders())
   }
 
-  handleHeaderClick(headerName: string) {
-    const response = this.czasopismaXml.evaluate(`/czasopisma/lata/${headerName}`,
-      this.czasopismaXml, null, XPathResult.ANY_TYPE);
-    const node = response.iterateNext() as Node
-    const categories = (node.textContent as string).split(',')
-    this.headersDisplayed = false
+  async handleHeaderClick(headerName: string): Promise<void> {
+    this.categories = await this.czasopismaService.fetchCategories(headerName)
+    this.selectedHeader = headerName
+    this.displayedComponent = 'categories'
   }
 
-  private getHeadersFromXml() {
-    const response = this.czasopismaXml.evaluate(`/czasopisma/zmienne`,
-      this.czasopismaXml, null, XPathResult.ANY_TYPE);
-    const node = response.iterateNext() as Node
-    for (const e of Array.from(node.childNodes)) {
-      if (e.nodeName !== '#text') {
-        this.headers.push({
-          name: e.nodeName,
-          image: e.childNodes[1].textContent as string
-        })
-      }
+  async handleCategoryClick(category: string): Promise<void> {
+    if (this.selectedHeader === undefined) {
+      throw new Error(`Header undefined for category ${category}`)
     }
+    this.czasopisma = await this.czasopismaService.fetchCzasopisma(this.selectedHeader, category)
+    this.displayedComponent = 'czasopisma'
   }
 
 }

@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BibliotekaComponent } from './biblioteka/biblioteka.component';
 import { Route, RouterModule } from '@angular/router';
 import { ZarobkiComponent } from './zarobki/zarobki.component';
+import { KategorieComponent } from './kategorie/kategorie.component';
+import { CzasopismaComponent } from './czasopisma/czasopisma.component';
 
 const routes: Route[] = [
   { path: 'biblioteka', component: BibliotekaComponent },
@@ -18,7 +20,9 @@ const routes: Route[] = [
   declarations: [
     AppComponent,
     BibliotekaComponent,
-    ZarobkiComponent
+    ZarobkiComponent,
+    KategorieComponent,
+    CzasopismaComponent
   ],
   imports: [
     BrowserModule,
