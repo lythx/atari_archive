@@ -5,16 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BibliotekaComponent } from './biblioteka/biblioteka.component';
-import { Route, RouterModule } from '@angular/router';
 import { ZarobkiComponent } from './zarobki/zarobki.component';
 import { KategorieComponent } from './kategorie/kategorie.component';
 import { CzasopismaComponent } from './czasopisma/czasopisma.component';
+import { BibliotekaRoutingComponent } from './biblioteka-routing/biblioteka-routing.component';
+import { CzasopismaRoutingComponent } from './czasopisma-routing/czasopisma-routing.component';
+import { KategorieRoutingComponent } from './kategorie-routing/kategorie-routing.component';
 
-const routes: Route[] = [
-  { path: 'biblioteka', component: BibliotekaComponent },
-  { path: 'zarobki', component: ZarobkiComponent },
-  { path: '', redirectTo: '/biblioteka', pathMatch: 'full' }
-]
 
 @NgModule({
   declarations: [
@@ -22,16 +19,18 @@ const routes: Route[] = [
     BibliotekaComponent,
     ZarobkiComponent,
     KategorieComponent,
-    CzasopismaComponent
+    CzasopismaComponent,
+    BibliotekaRoutingComponent,
+    CzasopismaRoutingComponent,
+    KategorieRoutingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
   ],
-  exports: [RouterModule],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })

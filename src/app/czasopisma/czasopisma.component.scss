@@ -1,0 +1,11 @@
+.grid {
+  display: grid;
+  grid-template-columns: 4fr 1fr 4fr 2fr;
+  width: 600px;
+  gap: 5px;
+}
+
+.grid div {
+  border: 1px solid black;
+  padding: 5px;
+}

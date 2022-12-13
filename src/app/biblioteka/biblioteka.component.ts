@@ -23,7 +23,7 @@ export class BibliotekaComponent implements OnInit {
   }
 
   async handleHeaderClick(headerName: string): Promise<void> {
-    this.categories = await this.czasopismaService.fetchCategories(headerName)
+    this.categories = await this.czasopismaService.fetchCategories(headerName) as string[]
     this.selectedHeader = headerName
     this.displayedComponent = 'categories'
   }

@@ -12,12 +12,9 @@
     wpisany jest rok wydania danych egzemplarzy lub klikni pole z napisem "Wszystkie", żeby zobaczyć wszystkie
     egzemplarze.
   </p>
-  <div *ngIf="displayedComponent==='headers'" [class.grid]="true">
-    <img *ngFor="let header of headers" src="http://atarionline.pl/biblioteka/czasopisma/img/{{header.image}}"
-      (click)="handleHeaderClick(header.name)" />
+  <div [class.buttonWrapper]="true">
+    <button *ngFor="let category of categories" [routerLink]="['./', category]">
+      {{category}}
+    </button>
   </div>
-  <app-kategorie *ngIf="displayedComponent==='categories'" [kategorie]='categories'
-    (onCategoryClick)="handleCategoryClick($event)"></app-kategorie>
-  <app-czasopisma *ngIf="displayedComponent==='czasopisma'" [czasopisma]='czasopisma'
-    [ngStyle]="{'overflow-y': 'auto'}"></app-czasopisma>
 </div>

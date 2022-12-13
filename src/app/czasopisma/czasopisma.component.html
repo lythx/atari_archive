@@ -1,1 +1,27 @@
-<p>czasopisma works!</p>
+<div [class.grid]="true">
+  <ng-container *ngFor="let czasopismo of czasopisma">
+    <div>{{czasopismo.miniaturka}}</div>
+    <div>
+      <p>format:</p>
+      <p>{{czasopismo.format}}</p>
+      <p>stron:</p>
+      <p>{{czasopismo.stron}}</p>
+    </div>
+    <div>
+      <p>nazwa:</p>
+      <p>{{czasopismo.nazwa}}</p>
+      <p>numer:</p>
+      <p>{{czasopismo.numer}}</p>
+      <p>wydawca:</p>
+      <p>{{czasopismo.numer}}</p>
+    </div>
+    <div>
+      <p>skan:</p>
+      <p>{{czasopismo.skan}}</p>
+      <p>przetworzenie:</p>
+      <p>{{czasopismo.przetworzenie}}</p>
+      <p>podeslal:</p>
+      <p>{{czasopismo.podeslal}}</p>
+    </div>
+  </ng-container>
+</div>
