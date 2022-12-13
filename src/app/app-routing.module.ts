@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: ':nazwa/:kategoria', component: CzasopismaRoutingComponent },
   { path: ':nazwa', component: KategorieRoutingComponent },
   { path: '', component: BibliotekaRoutingComponent },
-  { path: '*', redirectTo: '' }
+  { path: '**', redirectTo: '' }
 ]
 
 @NgModule({

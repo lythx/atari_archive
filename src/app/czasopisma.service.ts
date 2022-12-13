@@ -38,8 +38,13 @@ export class CzasopismaService {
 
   async fetchCategories(headerName: string): Promise<string[] | Error> {
     if (!this.isInitialized) { await this.initialize() }
-    const response = this.czasopismaXml.evaluate(`/czasopisma/lata/${headerName}`,
-      this.czasopismaXml, null, XPathResult.ANY_TYPE)
+    let response: XPathResult
+    try {
+      response = this.czasopismaXml.evaluate(`/czasopisma/lata/${headerName}`,
+        this.czasopismaXml, null, XPathResult.ANY_TYPE)
+    } catch (err) {
+      return new Error('Error while evaluating xml request')
+    }
     const node = response.iterateNext()
     if (node === null) { return new Error(`Node is null for header ${headerName}`) }
     return (node.textContent as string).split(',')
@@ -47,8 +52,13 @@ export class CzasopismaService {
 
   async fetchCzasopisma(headerName: string, category: string): Promise<Czasopismo[]> {
     if (!this.isInitialized) { await this.initialize() }
-    const response = this.czasopismaXml.evaluate(`/czasopisma/${headerName}/*[@rok='${category}' and not(boolean(@brak))]`,
-      this.czasopismaXml, null, XPathResult.ANY_TYPE);
+    let response: XPathResult
+    try {
+      response = this.czasopismaXml.evaluate(`/czasopisma/${headerName}/*[@rok='${category}' and not(boolean(@brak))]`,
+        this.czasopismaXml, null, XPathResult.ANY_TYPE);
+    } catch (err) {
+      return []
+    }
     let node = response.iterateNext()
     const czasopisma: Czasopismo[] = []
     while (node !== null) {
