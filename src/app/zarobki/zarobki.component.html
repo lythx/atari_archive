@@ -4,7 +4,7 @@
     <p>Wpisz zarobki z poprzedniego roku:
       <input [(ngModel)]="inputValue" #input (input)="handleInput(input)" type="password">EUR
     </p>
-    <p *ngIf="inputValue!==''">I tak widzimy, że twoje zarobki to: {{inputValue | currency:'EUR'}}</p>
+    <p *ngIf="inputValue!==''">I tak widzimy, że twoje zarobki to: {{inputValue | currency:'EUR': 'symbol': '.0-3'}}</p>
   </ng-container>
   <ng-container *ngIf="displayGrid">
     <p>Idealne zarobki by zrobić dalszą część zadania :)</p>

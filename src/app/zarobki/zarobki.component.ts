@@ -41,14 +41,13 @@ export class ZarobkiComponent {
   }
 
   private getImagesFromXml() {
-    const response = this.czasopismaXml.evaluate(`/czasopisma/zmienne/*/src`,
+    const response = this.czasopismaXml.evaluate(`/czasopisma/zmienne`,
       this.czasopismaXml, null, XPathResult.ANY_TYPE);
-    let node = response.iterateNext()
-    while (node !== null) {
-      for (const imageNode of Array.from(node.childNodes)) {
-        this.images.push(imageNode.textContent as string)
+    const node = response.iterateNext() as Node
+    for (const e of Array.from(node.childNodes)) {
+      if (e.nodeName !== '#text') {
+        this.images.push(e.childNodes[1].textContent as string)
       }
-      node = response.iterateNext()
     }
   }
 

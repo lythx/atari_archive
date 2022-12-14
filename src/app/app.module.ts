@@ -11,6 +11,8 @@ import { CzasopismaComponent } from './czasopisma/czasopisma.component';
 import { BibliotekaRoutingComponent } from './biblioteka-routing/biblioteka-routing.component';
 import { CzasopismaRoutingComponent } from './czasopisma-routing/czasopisma-routing.component';
 import { KategorieRoutingComponent } from './kategorie-routing/kategorie-routing.component';
+import { MaterialModule } from './material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { KategorieRoutingComponent } from './kategorie-routing/kategorie-routing
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule,
   ],
   exports: [],
   providers: [],

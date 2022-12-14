@@ -1,0 +1,91 @@
+<!-- <div class="wrapper"> -->
+<mat-card class="form">
+  <ng-container *ngIf="formType === 'edit'">
+    <mat-card-header [ngStyle]="{ 
+    'display': 'flex', 
+    'flex-direction': 'row'
+  }">
+      <mat-card-title class='header'>Edytuj pisma</mat-card-title>
+      <button mat-raised-button color="primary" type="submit" (click)="displayAddForm()">Dodaj</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row" *ngFor="let czasopismo of czasopisma; index as i">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input #name matInput placeholder="Nazwa pisma" [value]="czasopismo.name" (input)="handleFormChange(i)"
+              [(ngModel)]="czasopismo.name">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input #image matInput placeholder="Plik miniaturki" [value]="czasopismo.image"
+              (input)="handleFormChange(i)" [(ngModel)]="czasopismo.image">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Lata wydawania</mat-label>
+            <mat-select #categories multiple [(ngModel)]="czasopismo.categories" (valueChange)="handleFormChange(i)"
+              [(ngModel)]="czasopismo.categories">
+              <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="button">
+          <mat-card-actions>
+            <button mat-raised-button color="accent" type="submit" class="button"
+              (click)="handleDelete(i)">Usuń</button>
+            <button *ngIf="isChanged(i)" mat-raised-button color="primary" type="submit" class="button"
+              (click)="handleConfirm(i, name.value, image.value, categories.value)">Potwierdź</button>
+          </mat-card-actions>
+        </div>
+      </div>
+    </mat-card-content>
+  </ng-container>
+
+
+  <ng-container *ngIf="formType === 'add'">
+    <mat-card-header [ngStyle]="{ 
+      'display': 'flex', 
+      'flex-direction': 'row'
+    }">
+      <mat-card-title class='header'>Dodaj pismo</mat-card-title>
+      <button mat-raised-button color="primary" type="submit" (click)="displayEditForm()">Edytuj</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input #name matInput placeholder="Nazwa pisma" [(ngModel)]="addName">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input #image matInput placeholder="Plik miniaturki" [(ngModel)]="addImage">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Lata wydawania</mat-label>
+            <mat-select #categories multiple [(ngModel)]="addCategories">
+              <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="button">
+          <mat-card-actions>
+            <button mat-raised-button color="warn" type="submit" (click)="add()">Dodaj</button>
+          </mat-card-actions>
+        </div>
+      </div>
+    </mat-card-content>
+  </ng-container>
+</mat-card>
+
+<!-- </div> -->

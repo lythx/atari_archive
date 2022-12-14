@@ -5,6 +5,11 @@ export interface Header {
   name: string
   image: string
 }
+export interface CzasopismaInfo {
+  name: string
+  image: string
+  categories: string[]
+}
 export interface Czasopismo {
   miniaturka: string
   format: string
@@ -34,6 +39,31 @@ export class CzasopismaService {
   async fetchHeaders(): Promise<Header[]> {
     if (!this.isInitialized) { await this.initialize() }
     return this.headers
+  }
+
+  async updateCzasopismo(originalName: string, name: string, image: string, categories: string[]) {
+
+  }
+
+  async deleteCzasopismo(name: string): Promise<void> {
+    
+  }
+
+  async fetchCzasopismaInfo(): Promise<CzasopismaInfo[]> {
+    if (!this.isInitialized) { await this.initialize() }
+    const headersAndCategories: CzasopismaInfo[] = []
+    for (const header of this.headers) {
+      const categories = await this.fetchCategories(header.name)
+      if (categories instanceof Error) {
+        throw new Error(`Category error when fetching categories and headers ${categories.message}`)
+      }
+      headersAndCategories.push({
+        name: header.name,
+        image: header.image,
+        categories
+      })
+    }
+    return headersAndCategories
   }
 
   async fetchCategories(headerName: string): Promise<string[] | Error> {
@@ -76,6 +106,7 @@ export class CzasopismaService {
   }
 
   private initialize(): Promise<void> {
+    this.isInitialized = true
     return new Promise((resolve) => {
       this.httpClient.get("./assets/czasopisma.xml", {
         responseType: 'text'
